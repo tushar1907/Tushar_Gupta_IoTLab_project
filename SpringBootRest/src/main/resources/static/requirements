@@ -1,0 +1,37 @@
+1. Develop following REST (Any two) endpoints for ingestion from:
+[http://mocker.ennate.academy/]
+i. Load vehicle details in bulk via a PUT /vehicles endpoint.
+ii. If the vehicle with same VIN is already present, update the record in db.
+iii. Ingest readings from these vehicles via a POST /readings.
+
+
+2. Create (Any two) alerts with given priority when following rules are triggered
+i. Rule: engineRpm > readlineRpm, Priority: HIGH
+ii. Rule: fuelVolume < 10% of maxFuelVolume, Priority: MEDIUM
+iii. Rule: tire pressure of any tire < 32psi || > 36psi , Priority: LOW
+
+
+3. Develop REST end points for:
+i. Fetch details of all the vehicles like VIN, make, model, year etc.
+ii. Fetch HIGH alerts within last 2 hours for all the vehicles.
+iii. Ability to list a vehicle's all historical alerts.
+
+
+-----------------------------------------------------------------------------------------------------
+
+
+PUT Request Format
+i. PUTs mock vehicle details (array of vehicle objects) every 1min.
+ii. Please put your local HTTP PUT end point URL in following input box and press
+start :
+▪ Note : Make sure you are using CORS support in Spring Framework
+iii. JSON :
+
+
+
+POST Request Format
+i. POSTs mock vehicle readings every 3sec.
+ii. Please put your local HTTP POST end point URL in following input box and press
+start :
+▪ Note : Make sure you are using CORS support in Spring Framework
+iii. JSON :
