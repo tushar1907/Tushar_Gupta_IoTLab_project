@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-
 @Entity
 public class Reading {	
 	
@@ -27,22 +25,15 @@ public class Reading {
 	private double engineRpm;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "vin")
-	private JSONPObject tire;
+	private Tires tires;
 	
 	
-	public JSONPObject getTire() {
-		return tire;
+	public Tires getTires() {
+		return tires;
 	}
-	public void setTire(JSONPObject tire) {
-		this.tire = tire;
+	public void setTires(Tires tires) {
+		this.tires = tires;
 	}
-	//	public Tires getTire() {
-//		return tire;
-//	}
-//	public void setTire(Tires tire) {
-//		this.tire = tire;
-//	}
 	public String getVin() {
 		return vin;
 	}
