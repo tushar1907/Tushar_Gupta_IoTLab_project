@@ -27,22 +27,15 @@ public class Reading {
 	private double engineRpm;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "vin")
-	private JSONPObject tires;
+	private Tires tires;
 	
 	
-	public JSONPObject getTire() {
+	public Tires getTire() {
 		return tires;
 	}
-	public void setTire(JSONPObject tire) {
+	public void setTire(Tires tire) {
 		this.tires = tires;
-	}
-	//	public Tires getTire() {
-//		return tire;
-//	}
-//	public void setTire(Tires tire) {
-//		this.tire = tire;
-//	}
+	}	
 	public String getVin() {
 		return vin;
 	}
