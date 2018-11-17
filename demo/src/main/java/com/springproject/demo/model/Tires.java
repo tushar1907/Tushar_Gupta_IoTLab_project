@@ -10,6 +10,7 @@ public class Tires {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
 	private String vin;
 	private String frontLeft;
 	private String frontRight;
@@ -17,6 +18,12 @@ public class Tires {
 	private String rearRight;
 	
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getVin() {
 		return vin;
 	}

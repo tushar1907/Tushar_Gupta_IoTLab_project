@@ -10,15 +10,15 @@ public class Alert {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String alert;
+	private int alert;
 	private String priority;
 	private String vin;
 	
 	
-	public String getAlert() {
+	public int getAlert() {
 		return alert;
 	}
-	public void setAlert(String alert) {
+	public void setAlert(int alert) {
 		this.alert = alert;
 	}
 	public String getPriority() {
