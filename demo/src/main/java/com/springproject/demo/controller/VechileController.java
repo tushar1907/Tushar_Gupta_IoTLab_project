@@ -63,35 +63,45 @@ public class VechileController {
 	public void setReadings(@RequestBody Reading reading){	
 		
 		System.out.println(reading);
-//			Optional<Vehicle> v = vehicleJpaRepo.findById(reading.getVin());
-//		
-//			if(readingJpaRepo.existsById(reading.getVin())) {
-//				readingJpaRepo.deleteById(reading.getVin());
-//				readingJpaRepo.save(reading);	
-//				System.out.println("Old Vehicle Reading  ID  -->"+reading.getVin());
-//				System.out.println("Old Vehicle Reading -->"+reading);
-//			}
-//			else {
-//				readingJpaRepo.save(reading);				
-//				if(reading.getEngineRpm() > v.get().getRedlineRpm()) {
-//					Alert alert = new Alert();
-//					alert.setPriority("HIGH");
-//					alert.setVin(reading.getVin());
-//					alertJpaRepo.save(alert);
-//				}
-//				
-//				if(reading.getFuelVolume() < (v.get().getRedlineRpm()/10)){
-//					
-//					Alert alert = new Alert();
-//					alert.setPriority("MEDIUM");
-//					alert.setVin(reading.getVin());
-//					alertJpaRepo.save(alert);
-//					
-//				}
-//				
-//				System.out.println("New Vehicle Reading ID  -->"+reading.getVin());
-//				System.out.println("New Vehicle Reading -->"+reading);
-//			}	
+		
+			Optional<Vehicle> v = vehicleJpaRepo.findById(reading.getVin());
+			
+			if(readingJpaRepo.existsById(reading.getVin())) {
+				readingJpaRepo.deleteById(reading.getVin());
+				readingJpaRepo.save(reading);	
+				System.out.println("Old Vehicle Reading  ID  -->"+reading.getVin());
+				System.out.println("Old Vehicle Reading -->"+reading);
+			}
+			else {
+				readingJpaRepo.save(reading);				
+				if(reading.getEngineRpm() > v.get().getRedlineRpm()) {
+					Alert alert = new Alert();
+					alert.setPriority("HIGH");
+					alert.setVin(reading.getVin());
+					alertJpaRepo.save(alert);
+				}
+				
+				if(reading.getFuelVolume() < (v.get().getRedlineRpm()/10)){
+					
+					Alert alert = new Alert();
+					alert.setPriority("MEDIUM");
+					alert.setVin(reading.getVin());
+					alertJpaRepo.save(alert);
+					
+				}
+				
+				if(reading.getFuelVolume() < (v.get().getRedlineRpm()/10)){
+					
+					Alert alert = new Alert();
+					alert.setPriority("MEDIUM");
+					alert.setVin(reading.getVin());
+					alertJpaRepo.save(alert);
+					
+				}
+				
+				System.out.println("New Vehicle Reading ID  -->"+reading.getVin());
+				System.out.println("New Vehicle Reading -->"+reading);
+			}	
 	}
 }
 

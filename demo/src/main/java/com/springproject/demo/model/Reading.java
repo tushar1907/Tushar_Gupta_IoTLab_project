@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-
 @Entity
 public class Reading {	
 	
@@ -30,12 +28,12 @@ public class Reading {
 	private Tires tires;
 	
 	
-	public Tires getTire() {
+	public Tires getTires() {
 		return tires;
 	}
-	public void setTire(Tires tire) {
+	public void setTires(Tires tires) {
 		this.tires = tires;
-	}	
+	}
 	public String getVin() {
 		return vin;
 	}
