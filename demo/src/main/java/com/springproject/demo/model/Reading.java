@@ -28,14 +28,14 @@ public class Reading {
 	
 	@OneToOne(fetch = FetchType.LAZY)
     //@JoinColumn(name = "vin")
-	private JSONPObject tire;
+	private JSONPObject tires;
 	
 	
 	public JSONPObject getTire() {
-		return tire;
+		return tires;
 	}
 	public void setTire(JSONPObject tire) {
-		this.tire = tire;
+		this.tires = tires;
 	}
 	//	public Tires getTire() {
 //		return tire;
