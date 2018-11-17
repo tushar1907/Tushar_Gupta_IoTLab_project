@@ -1,10 +1,7 @@
-package com.springrest.app.dao;
+package com.springrest;
 
-import org.springframework.stereotype.Component;
+//import com.springrest.app.model.Vehicle;
 
-import com.springrest.app.model.Vehicle;
-
-@Component
 public interface VehicleDAO {
 
 	public abstract void createVehicle(Vehicle vehicle);

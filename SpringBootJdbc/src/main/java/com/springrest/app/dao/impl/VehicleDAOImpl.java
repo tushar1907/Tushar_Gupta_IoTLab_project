@@ -1,10 +1,12 @@
 package com.springrest.app.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.springrest.app.dao.VehicleDAO;
 import com.springrest.app.model.Vehicle;
+
 
 public class VehicleDAOImpl implements VehicleDAO {
 	
@@ -15,8 +17,8 @@ public class VehicleDAOImpl implements VehicleDAO {
 	@Override
 	public void createVehicle(Vehicle vehicle) {
 		
-		String CREATE_VEHICLE_SQL = "INSERT INTO vehicle_table(vin,make,model,year,redlineRpm,maxFuelVolume,lastServiceDate) VALUES(?,?,?,?,?,?,?)";
-
+		String CREATE_VEHICLE_SQL = "INSERT INTO vehicle(vin,make,model,year,redlineRpm,maxFuelVolume,lastServiceDate) VALUES(?,?,?,?,?,?,?)";
+		jdbcTemplate.update(CREATE_VEHICLE_SQL, vehicle.getVin(), vehicle.getMake(), vehicle.getModel(), vehicle.getYear(), vehicle.getRedlineRpm(), vehicle.getMaxFuelVolume(),vehicle.getLastServiceDate());
 	}
 
 	@Override

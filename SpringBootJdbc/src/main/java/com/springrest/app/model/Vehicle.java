@@ -1,7 +1,5 @@
 package com.springrest.app.model;
 
-
-
 public class Vehicle {
 
 	private String vin;
