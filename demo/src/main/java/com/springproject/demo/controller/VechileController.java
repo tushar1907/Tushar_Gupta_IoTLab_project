@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springproject.demo.model.Alert;
 import com.springproject.demo.model.Reading;
+import com.springproject.demo.model.Tires;
 import com.springproject.demo.model.Vehicle;
 import com.springproject.demo.repository.AlertJpaRepo;
 import com.springproject.demo.repository.ReadingJpaRepo;
+import com.springproject.demo.repository.TipeJpaRepo;
 import com.springproject.demo.repository.VehicleJpaRepo;
 
 
@@ -35,6 +37,9 @@ public class VechileController {
 	
 	@Autowired
 	private AlertJpaRepo alertJpaRepo;
+	
+	@Autowired
+	private TipeJpaRepo tipeJpaRepo;
 	
 	@CrossOrigin
 	@PutMapping(value="/vehicles")
@@ -67,13 +72,46 @@ public class VechileController {
 			Optional<Vehicle> v = vehicleJpaRepo.findById(reading.getVin());
 			
 			if(readingJpaRepo.existsById(reading.getVin())) {
+				tipeJpaRepo.deleteById(reading.getVin());
 				readingJpaRepo.deleteById(reading.getVin());
+				Tires tires = new Tires();
+				tires.setFrontLeft(reading.getTires().getFrontLeft());
+				tires.setFrontRight(reading.getTires().getFrontRight());
+				tires.setRearLeft(reading.getTires().getRearLeft());
+				tires.setRearRight(reading.getTires().getRearRight());
+				tires.setVin(reading.getTires().getVin());
+				tipeJpaRepo.save(tires);
 				readingJpaRepo.save(reading);	
 				System.out.println("Old Vehicle Reading  ID  -->"+reading.getVin());
 				System.out.println("Old Vehicle Reading -->"+reading);
 			}
 			else {
-				readingJpaRepo.save(reading);				
+				
+				Tires tires = new Tires();
+				tires.setFrontLeft(reading.getTires().getFrontLeft());
+				tires.setFrontRight(reading.getTires().getFrontRight());
+				tires.setRearLeft(reading.getTires().getRearLeft());
+				tires.setRearRight(reading.getTires().getRearRight());
+				tires.setVin(reading.getTires().getVin());
+				System.out.println(tires);
+				tipeJpaRepo.save(tires);	
+				
+				Reading r = new Reading();
+				r.setVin(reading.getVin());
+				r.setCheckEngineLightOn(reading.getCheckEngineLightOn());
+				r.setCruiseControlOn(reading.getCruiseControlOn());
+				r.setEngineCoolantLow(reading.getEngineCoolantLow());
+				r.setEngineHp(reading.getEngineHp());
+				r.setEngineRpm(reading.getEngineRpm());
+				r.setFuelVolume(reading.getFuelVolume());
+				r.setLatitude(reading.getLatitude());
+				r.setLongitude(reading.getLongitude());
+				r.setSpeed(reading.getSpeed());
+				r.setTimestamp(reading.getTimestamp());
+				r.setTires(tires);				
+				readingJpaRepo.save(r);	
+				System.out.println(v.get().getRedlineRpm());
+				System.out.println(reading.getEngineRpm());
 				if(reading.getEngineRpm() > v.get().getRedlineRpm()) {
 					Alert alert = new Alert();
 					alert.setPriority("HIGH");
