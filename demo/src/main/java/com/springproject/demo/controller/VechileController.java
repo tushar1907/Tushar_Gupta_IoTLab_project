@@ -192,8 +192,7 @@ public class VechileController {
 	// Method to fetch HIGH alerts within last 2 hours for all the vehicles.
 	@CrossOrigin
 	@GetMapping(value = "/allhighalerts")
-	public void getHignAlerts() throws java.text.ParseException {
-		int i = 1;
+	public List<Alert> getHignAlerts() throws java.text.ParseException {		
 		List<Alert> a = alertJpaRepo.findByPriority("HIGH");
 		Date d = new Date();
 		SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
@@ -202,7 +201,7 @@ public class VechileController {
 
 		System.out.println(lowerLimit);
 		System.out.println(higherLimit);
-
+		
 		try {
 			for (Alert alert : a) {
 				System.out.println(alert.getPriority());
@@ -218,25 +217,22 @@ public class VechileController {
 			// Invalid date was entered
 		}	
 		
-
-		for(Alert alert : a) {
-			System.out.println(alert.getPriority());
-		}
+		return a;
 		
 	}
 
 	// Method to gives the ability to list a vehicle's all historical alerts.
 	@CrossOrigin
 	@GetMapping(value = "/vehiclehistory/{vin}")
-	public String getVehicleHistory(@PathVariable final String vin) {
+	public List<Alert> getVehicleHistory(@PathVariable final String vin) {
 
 		List<Alert> a = alertJpaRepo.findByVin(vin);
-
-		for(Alert alert : a) {
-			System.out.println(alert.getVin());
-			return alert.getVin();
-		}
-		return ("No historical alert found for vehicle");
+		return a;
+//		for(Alert alert : a) {
+//			System.out.println(alert.getVin());
+//			return alert.getVin();
+//		}
+//		return ("No historical alert found for vehicle");
 		
 	}
 
