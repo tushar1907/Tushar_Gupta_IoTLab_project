@@ -14,5 +14,6 @@ public interface AlertJpaRepo extends JpaRepository<Alert, String>{
 
 	List<Alert> findByPriority(String string);
 
+	List<Alert> findByVin(String string);
 	
 }
