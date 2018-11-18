@@ -2,6 +2,7 @@ package com.springproject.demo.model;
 
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class Reading {
 	private Boolean cruiseControlOn;
 	private double engineRpm;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(cascade=CascadeType.REMOVE, optional=true)
 	private Tires tires;
 	
 	
