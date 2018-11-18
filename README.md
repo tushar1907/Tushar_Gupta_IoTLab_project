@@ -12,15 +12,15 @@ and will send HTTP PUT and HTTP GET request to the API
 ### Endpoint triggers for help
 
 #### Main endpoints
-- Loading vehicle details in bulk via a PUT /vehicles endpoint: http://localhost:8080/vehicles  --> DONE
+- Loading vehicle details in bulk via a PUT /vehicles endpoint: **http://localhost:8080/vehicles**  --> DONE
 - If the vehicle with same VIN is already present, update the record in db --> DONE
-- Ingest readings from these vehicles via a POST /readings: http://localhost:8080/readings --> DONE
+- Ingest readings from these vehicles via a POST /readings: **http://localhost:8080/readings** --> DONE
 
 #### Alerts with given priority when following rules are triggered
-- Rule: engineRpm > readlineRpm, Priority: HIGH
-- Rule: fuelVolume < 10% of maxFuelVolume, Priority: MEDIUM
+- Rule: engineRpm > readlineRpm, Priority: HIGH --> DONE
+- Rule: fuelVolume < 10% of maxFuelVolume, Priority: MEDIUM --> DONE
 
 #### Develop REST end points for:
-- Endpoint to fetch details of all the vehicles like VIN, make, model, year etc: localhost:8080/allvehicles  --> DONE
-- Endpoint to fetch HIGH alerts within last 2 hours for all the vehicles: localhost:8080/allhighalerts  --> DONE
-- Endpoint to list a vehicle's all historical alerts: localhost:8080/vehiclehistory/<VIN>  --> DONE
+- Endpoint to fetch details of all the vehicles like VIN, make, model, year etc: **localhost:8080/allvehicles**  --> DONE
+- Endpoint to fetch HIGH alerts within last 2 hours for all the vehicles: **localhost:8080/allhighalerts**  --> DONE
+- Endpoint to list a vehicle's all historical alerts: **localhost:8080/vehiclehistory/<VIN>**  --> DONE
