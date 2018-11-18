@@ -21,6 +21,6 @@ and will send HTTP PUT and HTTP GET request to the API
 - Rule: fuelVolume < 10% of maxFuelVolume, Priority: MEDIUM --> DONE
 
 #### Develop REST end points for:
-- Endpoint to fetch details of all the vehicles like VIN, make, model, year etc: **localhost:8080/allvehicles**  --> DONE
-- Endpoint to fetch HIGH alerts within last 2 hours for all the vehicles: **localhost:8080/allhighalerts**  --> DONE
-- Endpoint to list a vehicle's all historical alerts: **localhost:8080/vehiclehistory/<VIN>**  --> DONE
+- Endpoint to fetch details of all the vehicles like VIN, make, model, year etc: **http://localhost:8080/allvehicles**  --> DONE
+- Endpoint to fetch HIGH alerts within last 2 hours for all the vehicles: **http://localhost:8080/allhighalerts**  --> DONE
+- Endpoint to list a vehicle's all historical alerts: **http://localhost:8080/vehiclehistory/<VIN>**  --> DONE
