@@ -8,52 +8,46 @@ import javax.persistence.Id;
 @Entity
 public class Tires {
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	@Id	
 	private String vin;
-	private String frontLeft;
-	private String frontRight;
-	private String rearLeft;
-	private String rearRight;
+	private int frontLeft;
+	private int frontRight;
+	private int rearLeft;
+	private int rearRight;
 	
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getVin() {
 		return vin;
 	}
 	public void setVin(String vin) {
 		this.vin = vin;
 	}
-	public String getFrontLeft() {
+	public int getFrontLeft() {
 		return frontLeft;
 	}
-	public void setFrontLeft(String frontLeft) {
+	public void setFrontLeft(int frontLeft) {
 		this.frontLeft = frontLeft;
 	}
-	public String getFrontRight() {
+	public int getFrontRight() {
 		return frontRight;
 	}
-	public void setFrontRight(String frontRight) {
+	public void setFrontRight(int frontRight) {
 		this.frontRight = frontRight;
 	}
-	public String getRearLeft() {
+	public int getRearLeft() {
 		return rearLeft;
 	}
-	public void setRearLeft(String rearLeft) {
+	public void setRearLeft(int rearLeft) {
 		this.rearLeft = rearLeft;
 	}
-	public String getRearRight() {
+	public int getRearRight() {
 		return rearRight;
 	}
-	public void setRearRight(String rearRight) {
+	public void setRearRight(int rearRight) {
 		this.rearRight = rearRight;
 	}
+	
+		
 	
 	
 }
