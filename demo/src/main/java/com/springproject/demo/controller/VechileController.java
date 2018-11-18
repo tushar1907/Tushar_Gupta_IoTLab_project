@@ -70,9 +70,9 @@ public class VechileController {
 		System.out.println(reading);
 		
 			Optional<Vehicle> v = vehicleJpaRepo.findById(reading.getVin());
-			Optional<Tires> t = tipeJpaRepo.findById(reading.getVin());
+			//Optional<Tires> t = tipeJpaRepo.findById(reading.getVin());
 			if(readingJpaRepo.existsById(reading.getVin())) {
-				tipeJpaRepo.deleteById(reading.getVin());
+				//tipeJpaRepo.deleteById(reading.getVin());
 				readingJpaRepo.deleteById(reading.getVin());
 				
 				Tires tires = new Tires();
@@ -99,28 +99,27 @@ public class VechileController {
 				r.setTires(tires);				
 				readingJpaRepo.save(r);	
 				System.out.println(v.get().getRedlineRpm());
-				System.out.println(reading.getEngineRpm());
-				if(reading.getEngineRpm() > v.get().getRedlineRpm()) {
+				System.out.println(r.getEngineRpm());
+				if(r.getEngineRpm() > v.get().getRedlineRpm()) {
 					Alert alert = new Alert();
 					alert.setPriority("HIGH");
 					alert.setVin(reading.getVin());
 					alertJpaRepo.save(alert);
+					System.out.println("High alert generated");
 				}
 				
-				if(reading.getFuelVolume() < (v.get().getRedlineRpm()/10)){
+				if(r.getFuelVolume() < (v.get().getRedlineRpm()/10)){
 					
 					Alert alert = new Alert();
 					alert.setPriority("MEDIUM");
 					alert.setVin(reading.getVin());
 					alertJpaRepo.save(alert);
-					
+					System.out.println("Medium alert generated");					
 				}
-				
-				
-				
 				
 				System.out.println("Old Vehicle Reading  ID  -->"+reading.getVin());
 				System.out.println("Old Vehicle Reading -->"+reading);
+				
 			}
 			else {
 				
@@ -154,6 +153,7 @@ public class VechileController {
 					alert.setPriority("HIGH");
 					alert.setVin(reading.getVin());
 					alertJpaRepo.save(alert);
+					System.out.println("High alert generated");
 				}
 				
 				if(reading.getFuelVolume() < (v.get().getRedlineRpm()/10)){
@@ -162,13 +162,37 @@ public class VechileController {
 					alert.setPriority("MEDIUM");
 					alert.setVin(reading.getVin());
 					alertJpaRepo.save(alert);
-					
-				}				
-				
+					System.out.println("Medium alert generated");
+				}			
 				
 				System.out.println("New Vehicle Reading ID  -->"+reading.getVin());
 				System.out.println("New Vehicle Reading -->"+reading);
 			}	
 	}
+	
+	
+	@CrossOrigin
+	@GetMapping(value="/allvehicles")
+	public void getVehicles(){	
+		
+		List<Vehicle> v = vehicleJpaRepo.findAll();
+		
+		System.out.println(v);
+		
+	}
+	
+	@CrossOrigin
+	@GetMapping(value="/allhighalerts")
+	public void getHignAlerts(){	
+		
+		List<Alert> a = alertJpaRepo.findByPriority("HIGH");
+		
+		
+		for(Alert alert : a) {
+		System.out.println(alert.getPriority());
+		}
+	}
+	
+	
 }
 
