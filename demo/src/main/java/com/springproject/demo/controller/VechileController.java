@@ -1,5 +1,6 @@
 package com.springproject.demo.controller;
 
+import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -47,193 +48,125 @@ public class VechileController {
 	// present.
 	@CrossOrigin
 	@PutMapping(value = "/vehicles")
-	public void setVechiles(@RequestBody List<Vehicle> payload) {
+	public String setVechiles(@RequestBody List<Vehicle> payload) {
 
 		for (Vehicle vehicle : payload) {
-			System.out.println(vehicle);
 			if (vehicleJpaRepo.existsById(vehicle.getVin())) {
 				vehicleJpaRepo.deleteById(vehicle.getVin());
 				vehicleJpaRepo.save(vehicle);
 				System.out.println("Ols Vehicle ID  -->" + vehicle.getVin());
-				System.out.println("Old Vehicle -->" + vehicle);
+
 			} else {
 				vehicleJpaRepo.save(vehicle);
 				System.out.println("New Vehicle ID  -->" + vehicle.getVin());
-				System.out.println("New Vehicle -->" + vehicle);
+
 			}
 
 		}
+
+		return "Vehicle successfully added";
 
 	}
 
 	// Method to ingest readings from these vehicles via a POST /readings
 	@CrossOrigin
 	@PostMapping(value = "/readings")
-	public void setReadings(@RequestBody Reading reading) {
-
-		System.out.println(reading);
+	public String setReadings(@RequestBody Reading reading) {
 
 		Optional<Vehicle> v = vehicleJpaRepo.findById(reading.getVin());
-		// Optional<Tires> t = tipeJpaRepo.findById(reading.getVin());
-		if (readingJpaRepo.existsById(reading.getVin())) {
-			// tipeJpaRepo.deleteById(reading.getVin());
-			readingJpaRepo.deleteById(reading.getVin());
+		Tires tires = new Tires();
+		tires.setFrontLeft(reading.getTires().getFrontLeft());
+		tires.setFrontRight(reading.getTires().getFrontRight());
+		tires.setRearLeft(reading.getTires().getRearLeft());
+		tires.setRearRight(reading.getTires().getRearRight());
+		tires.setVin(reading.getVin());
+		tipeJpaRepo.save(tires);
 
-			Tires tires = new Tires();
-			tires.setFrontLeft(reading.getTires().getFrontLeft());
-			tires.setFrontRight(reading.getTires().getFrontRight());
-			tires.setRearLeft(reading.getTires().getRearLeft());
-			tires.setRearRight(reading.getTires().getRearRight());
-			tires.setVin(reading.getVin());
-			tipeJpaRepo.save(tires);
+		Reading r = new Reading();
+		r.setVin(reading.getVin());
+		r.setCheckEngineLightOn(reading.getCheckEngineLightOn());
+		r.setCruiseControlOn(reading.getCruiseControlOn());
+		r.setEngineCoolantLow(reading.getEngineCoolantLow());
+		r.setEngineHp(reading.getEngineHp());
+		r.setEngineRpm(reading.getEngineRpm());
+		r.setFuelVolume(reading.getFuelVolume());
+		r.setLatitude(reading.getLatitude());
+		r.setLongitude(reading.getLongitude());
+		r.setSpeed(reading.getSpeed());
+		r.setTimestamp(reading.getTimestamp());
+		r.setTires(tires);
+		readingJpaRepo.save(r);
 
-			Reading r = new Reading();
-			r.setVin(reading.getVin());
-			r.setCheckEngineLightOn(reading.getCheckEngineLightOn());
-			r.setCruiseControlOn(reading.getCruiseControlOn());
-			r.setEngineCoolantLow(reading.getEngineCoolantLow());
-			r.setEngineHp(reading.getEngineHp());
-			r.setEngineRpm(reading.getEngineRpm());
-			r.setFuelVolume(reading.getFuelVolume());
-			r.setLatitude(reading.getLatitude());
-			r.setLongitude(reading.getLongitude());
-			r.setSpeed(reading.getSpeed());
-			r.setTimestamp(reading.getTimestamp());
-			r.setTires(tires);
-			readingJpaRepo.save(r);
-			System.out.println(v.get().getRedlineRpm());
-			System.out.println(r.getEngineRpm());
-			if (r.getEngineRpm() > v.get().getRedlineRpm()) {
-				Alert alert = new Alert();
-				alert.setPriority("HIGH");
-				alert.setVin(reading.getVin());
-				alert.setDate(new Date());
-				alertJpaRepo.save(alert);
-				System.out.println("High alert generated");
-			}
-
-			if (r.getFuelVolume() < (v.get().getRedlineRpm() / 10)) {
-
-				Alert alert = new Alert();
-				alert.setPriority("MEDIUM");
-				alert.setVin(reading.getVin());
-				alert.setDate(new Date());
-				alertJpaRepo.save(alert);
-				System.out.println("Medium alert generated");
-			}
-
-			System.out.println("Old Vehicle Reading  ID  -->" + reading.getVin());
-			System.out.println("Old Vehicle Reading -->" + reading);
-
-		} else {
-
-			Tires tires = new Tires();
-			tires.setFrontLeft(reading.getTires().getFrontLeft());
-			tires.setFrontRight(reading.getTires().getFrontRight());
-			tires.setRearLeft(reading.getTires().getRearLeft());
-			tires.setRearRight(reading.getTires().getRearRight());
-			tires.setVin(reading.getVin());
-			System.out.println(tires);
-			tipeJpaRepo.save(tires);
-
-			Reading r = new Reading();
-			r.setVin(reading.getVin());
-			r.setCheckEngineLightOn(reading.getCheckEngineLightOn());
-			r.setCruiseControlOn(reading.getCruiseControlOn());
-			r.setEngineCoolantLow(reading.getEngineCoolantLow());
-			r.setEngineHp(reading.getEngineHp());
-			r.setEngineRpm(reading.getEngineRpm());
-			r.setFuelVolume(reading.getFuelVolume());
-			r.setLatitude(reading.getLatitude());
-			r.setLongitude(reading.getLongitude());
-			r.setSpeed(reading.getSpeed());
-			r.setTimestamp(reading.getTimestamp());
-			r.setTires(tires);
-			readingJpaRepo.save(r);
-			System.out.println(v.get().getRedlineRpm());
-			System.out.println(reading.getEngineRpm());
-			if (reading.getEngineRpm() > v.get().getRedlineRpm()) {
-				Alert alert = new Alert();
-				alert.setPriority("HIGH");
-				alert.setVin(reading.getVin());
-				alert.setDate(new Date());
-				alertJpaRepo.save(alert);
-				System.out.println("High alert generated");
-			}
-
-			if (reading.getFuelVolume() < (v.get().getRedlineRpm() / 10)) {
-
-				Alert alert = new Alert();
-				alert.setPriority("MEDIUM");
-				alert.setVin(reading.getVin());
-				alert.setDate(new Date());
-				alertJpaRepo.save(alert);
-				System.out.println("Medium alert generated");
-			}
-
-			System.out.println("New Vehicle Reading ID  -->" + reading.getVin());
-			System.out.println("New Vehicle Reading -->" + reading);
+		if (reading.getEngineRpm() > v.get().getRedlineRpm()) {
+			Alert alert = new Alert();
+			alert.setPriority("HIGH");
+			alert.setVin(reading.getVin());
+			alert.setDate(new Date());
+			alertJpaRepo.save(alert);
+			System.out.println("High alert generated");
 		}
+
+		if (reading.getFuelVolume() < (v.get().getRedlineRpm() / 10)) {
+
+			Alert alert = new Alert();
+			alert.setPriority("MEDIUM");
+			alert.setVin(reading.getVin());
+			alert.setDate(new Date());
+			alertJpaRepo.save(alert);
+			System.out.println("Medium alert generated");
+		}
+
+		return "Reading successfully added";
 	}
 
 	// Method to fetch details of all the vehicles like VIN, make, model, year etc
 	@CrossOrigin
 	@GetMapping(value = "/allvehicles")
-	public void getVehicles() {
+	public List<Vehicle> getVehicles() {
 
 		List<Vehicle> v = vehicleJpaRepo.findAll();
-
-		for (Vehicle vehicle : v) {
-			System.out.println(vehicle.getVin());
-		}
+		return v;
 
 	}
 
 	// Method to fetch HIGH alerts within last 2 hours for all the vehicles.
 	@CrossOrigin
 	@GetMapping(value = "/allhighalerts")
-	public List<Alert> getHignAlerts() throws java.text.ParseException {		
+	public List<Alert> getHignAlerts() throws java.text.ParseException, InvocationTargetException {
 		List<Alert> a = alertJpaRepo.findByPriority("HIGH");
 		Date d = new Date();
 		SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
 		Date lowerLimit = parser.parse(d.getHours() - 2 + ":" + d.getMinutes());
 		Date higherLimit = parser.parse(d.getHours() + ":" + d.getMinutes());
 
-		System.out.println(lowerLimit);
-		System.out.println(higherLimit);
-		
 		try {
 			for (Alert alert : a) {
-				System.out.println(alert.getPriority());
 				Date userDate = parser.parse(alert.getDate().getHours() + ":" + alert.getDate().getMinutes());
 				if (userDate.after(lowerLimit) && userDate.before(higherLimit)) {
-					System.out.println("Found a high alert in last last two hours");
+					System.out.println("Found a high alert in last two hours");
 				} else {
 					a.remove(alert);
+					System.out.println("Removed a high alert beyond last two hours");
 				}
 			}
 
 		} catch (ParseException e) {
-			// Invalid date was entered
-		}	
-		
-		return a;
-		
+
+		}
+
+		return a.size() > 0 ? a : null;
+
 	}
 
+	
 	// Method to gives the ability to list a vehicle's all historical alerts.
 	@CrossOrigin
 	@GetMapping(value = "/vehiclehistory/{vin}")
 	public List<Alert> getVehicleHistory(@PathVariable final String vin) {
-
+		System.out.println("Requested list of all vehicles sent");
 		List<Alert> a = alertJpaRepo.findByVin(vin);
 		return a;
-//		for(Alert alert : a) {
-//			System.out.println(alert.getVin());
-//			return alert.getVin();
-//		}
-//		return ("No historical alert found for vehicle");
-		
+
 	}
 
 }
