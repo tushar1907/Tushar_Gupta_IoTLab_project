@@ -10,6 +10,7 @@ import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +42,9 @@ public class VechileController {
 	@Autowired
 	private TipeJpaRepo tipeJpaRepo;
 
+	// Method to load vehicle details in bulk via a PUT /vehicles endpoint.
+	// Method will update the record in db, if the vehicle with same VIN is already
+	// present.
 	@CrossOrigin
 	@PutMapping(value = "/vehicles")
 	public void setVechiles(@RequestBody List<Vehicle> payload) {
@@ -62,6 +66,7 @@ public class VechileController {
 
 	}
 
+	// Method to ingest readings from these vehicles via a POST /readings
 	@CrossOrigin
 	@PostMapping(value = "/readings")
 	public void setReadings(@RequestBody Reading reading) {
@@ -192,7 +197,7 @@ public class VechileController {
 		List<Alert> a = alertJpaRepo.findByPriority("HIGH");
 		Date d = new Date();
 		SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
-		Date lowerLimit = parser.parse(d.getHours()-2 + ":" + d.getMinutes());
+		Date lowerLimit = parser.parse(d.getHours() - 2 + ":" + d.getMinutes());
 		Date higherLimit = parser.parse(d.getHours() + ":" + d.getMinutes());
 
 		System.out.println(lowerLimit);
@@ -200,22 +205,39 @@ public class VechileController {
 
 		try {
 			for (Alert alert : a) {
+				System.out.println(alert.getPriority());
 				Date userDate = parser.parse(alert.getDate().getHours() + ":" + alert.getDate().getMinutes());
 				if (userDate.after(lowerLimit) && userDate.before(higherLimit)) {
 					System.out.println("Found a high alert in last last two hours");
-				}else {
+				} else {
 					a.remove(alert);
 				}
 			}
 
 		} catch (ParseException e) {
 			// Invalid date was entered
-		}
+		}	
+		
 
-//		
-//		
-//		
-//		
+		for(Alert alert : a) {
+			System.out.println(alert.getPriority());
+		}
+		
+	}
+
+	// Method to gives the ability to list a vehicle's all historical alerts.
+	@CrossOrigin
+	@GetMapping(value = "/vehiclehistory/{vin}")
+	public String getVehicleHistory(@PathVariable final String vin) {
+
+		List<Alert> a = alertJpaRepo.findByVin(vin);
+
+		for(Alert alert : a) {
+			System.out.println(alert.getVin());
+			return alert.getVin();
+		}
+		return ("No historical alert found for vehicle");
+		
 	}
 
 }
