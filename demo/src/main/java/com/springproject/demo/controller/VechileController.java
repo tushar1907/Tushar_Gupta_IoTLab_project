@@ -70,31 +70,19 @@ public class VechileController {
 		System.out.println(reading);
 		
 			Optional<Vehicle> v = vehicleJpaRepo.findById(reading.getVin());
-			
+			Optional<Tires> t = tipeJpaRepo.findById(reading.getVin());
 			if(readingJpaRepo.existsById(reading.getVin())) {
 				tipeJpaRepo.deleteById(reading.getVin());
 				readingJpaRepo.deleteById(reading.getVin());
-				Tires tires = new Tires();
-				tires.setFrontLeft(reading.getTires().getFrontLeft());
-				tires.setFrontRight(reading.getTires().getFrontRight());
-				tires.setRearLeft(reading.getTires().getRearLeft());
-				tires.setRearRight(reading.getTires().getRearRight());
-				tires.setVin(reading.getTires().getVin());
-				tipeJpaRepo.save(tires);
-				readingJpaRepo.save(reading);	
-				System.out.println("Old Vehicle Reading  ID  -->"+reading.getVin());
-				System.out.println("Old Vehicle Reading -->"+reading);
-			}
-			else {
 				
 				Tires tires = new Tires();
 				tires.setFrontLeft(reading.getTires().getFrontLeft());
 				tires.setFrontRight(reading.getTires().getFrontRight());
 				tires.setRearLeft(reading.getTires().getRearLeft());
 				tires.setRearRight(reading.getTires().getRearRight());
-				tires.setVin(reading.getTires().getVin());
-				System.out.println(tires);
-				tipeJpaRepo.save(tires);	
+				tires.setVin(reading.getVin());
+				tipeJpaRepo.save(tires);
+				
 				
 				Reading r = new Reading();
 				r.setVin(reading.getVin());
@@ -128,6 +116,46 @@ public class VechileController {
 					
 				}
 				
+				
+				
+				
+				System.out.println("Old Vehicle Reading  ID  -->"+reading.getVin());
+				System.out.println("Old Vehicle Reading -->"+reading);
+			}
+			else {
+				
+				Tires tires = new Tires();
+				tires.setFrontLeft(reading.getTires().getFrontLeft());
+				tires.setFrontRight(reading.getTires().getFrontRight());
+				tires.setRearLeft(reading.getTires().getRearLeft());
+				tires.setRearRight(reading.getTires().getRearRight());
+				tires.setVin(reading.getVin());
+				System.out.println(tires);
+				tipeJpaRepo.save(tires);	
+				
+				Reading r = new Reading();
+				r.setVin(reading.getVin());
+				r.setCheckEngineLightOn(reading.getCheckEngineLightOn());
+				r.setCruiseControlOn(reading.getCruiseControlOn());
+				r.setEngineCoolantLow(reading.getEngineCoolantLow());
+				r.setEngineHp(reading.getEngineHp());
+				r.setEngineRpm(reading.getEngineRpm());
+				r.setFuelVolume(reading.getFuelVolume());
+				r.setLatitude(reading.getLatitude());
+				r.setLongitude(reading.getLongitude());
+				r.setSpeed(reading.getSpeed());
+				r.setTimestamp(reading.getTimestamp());
+				r.setTires(tires);				
+				readingJpaRepo.save(r);	
+				System.out.println(v.get().getRedlineRpm());
+				System.out.println(reading.getEngineRpm());
+				if(reading.getEngineRpm() > v.get().getRedlineRpm()) {
+					Alert alert = new Alert();
+					alert.setPriority("HIGH");
+					alert.setVin(reading.getVin());
+					alertJpaRepo.save(alert);
+				}
+				
 				if(reading.getFuelVolume() < (v.get().getRedlineRpm()/10)){
 					
 					Alert alert = new Alert();
@@ -135,7 +163,8 @@ public class VechileController {
 					alert.setVin(reading.getVin());
 					alertJpaRepo.save(alert);
 					
-				}
+				}				
+				
 				
 				System.out.println("New Vehicle Reading ID  -->"+reading.getVin());
 				System.out.println("New Vehicle Reading -->"+reading);
