@@ -1,10 +1,13 @@
 # Tushar_Gupta_IoTLab_project
 
-One Paragraph of project description goes here
+For this problem statement, I built a Java based web-microservices API[Backend] for Car Tracker Sensor. To simulate the sensor readings we will be provided with a mocker service LINK: http://mocker.ennate.academy/. This service will send will mock the sensor request
+and will send HTTP PUT and HTTP GET request to the API
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+* Setup spring boot project with H2, Web on eclipse.
+* Create repository for all the database like alerts , vehicles and readings. 
+
 
 ### Prerequisites
 
