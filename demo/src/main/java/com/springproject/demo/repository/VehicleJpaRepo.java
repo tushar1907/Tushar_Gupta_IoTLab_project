@@ -5,9 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.springproject.demo.model.Vehicle;
 
-
-
 @Component
-public interface VehicleJpaRepo extends JpaRepository<Vehicle, String>{
+public interface VehicleJpaRepo extends JpaRepository<Vehicle, String> {
 
 }

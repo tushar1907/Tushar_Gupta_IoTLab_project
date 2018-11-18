@@ -16,8 +16,14 @@ public class Alert {
 	private String priority;
 	private String vin;
 	private Date date;
+	private String errMsg;
 	
-	
+	public String getErrMsg() {
+		return errMsg;
+	}
+	public void setErrMsg(String errMsg) {
+		this.errMsg = errMsg;
+	}
 	public Date getDate() {
 		return date;
 	}

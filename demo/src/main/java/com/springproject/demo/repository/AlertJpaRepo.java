@@ -7,13 +7,11 @@ import org.springframework.stereotype.Component;
 
 import com.springproject.demo.model.Alert;
 
-
-
 @Component
-public interface AlertJpaRepo extends JpaRepository<Alert, String>{
+public interface AlertJpaRepo extends JpaRepository<Alert, String> {
 
 	List<Alert> findByPriority(String string);
 
 	List<Alert> findByVin(String string);
-	
+
 }

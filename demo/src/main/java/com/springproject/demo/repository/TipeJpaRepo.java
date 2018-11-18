@@ -5,9 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.springproject.demo.model.Tires;
 
-
-
 @Component
-public interface TipeJpaRepo extends JpaRepository<Tires, String>{
+public interface TipeJpaRepo extends JpaRepository<Tires, String> {
 
 }
