@@ -12,9 +12,9 @@ and will send HTTP PUT and HTTP GET request to the API
 ### Endpoint triggers for help
 
 * Main endpoints
-i. Loading vehicle details in bulk via a PUT /vehicles endpoint: http://localhost:8080/vehicles  --> DONE
-ii. If the vehicle with same VIN is already present, update the record in db --> DONE
-iii. Ingest readings from these vehicles via a POST /readings: http://localhost:8080/readings --> DONE
+- Loading vehicle details in bulk via a PUT /vehicles endpoint: http://localhost:8080/vehicles  --> DONE
+- If the vehicle with same VIN is already present, update the record in db --> DONE
+- Ingest readings from these vehicles via a POST /readings: http://localhost:8080/readings --> DONE
 
 * Alerts with given priority when following rules are triggered
 i. Rule: engineRpm > readlineRpm, Priority: HIGH
