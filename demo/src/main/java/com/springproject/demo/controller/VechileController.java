@@ -106,7 +106,7 @@ public class VechileController {
 			System.out.println("High alert generated");
 		}
 
-		if (reading.getFuelVolume() < (v.get().getRedlineRpm() / 10)) {
+		if (reading.getFuelVolume() < (v.get().getMaxFuelVolume() / 10)) {
 
 			Alert alert = new Alert();
 			alert.setPriority("MEDIUM");
