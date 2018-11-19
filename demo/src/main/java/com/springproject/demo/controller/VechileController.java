@@ -54,7 +54,7 @@ public class VechileController {
 			if (vehicleJpaRepo.existsById(vehicle.getVin())) {
 				vehicleJpaRepo.deleteById(vehicle.getVin());
 				vehicleJpaRepo.save(vehicle);
-				System.out.println("Ols Vehicle ID  -->" + vehicle.getVin());
+				System.out.println("Old Vehicle ID  -->" + vehicle.getVin());
 
 			} else {
 				vehicleJpaRepo.save(vehicle);
